@@ -1,0 +1,3 @@
+Mocha for - page testing (Unit and intigration testing)
+
+Zombie for - Cross-page functionality testing (integration testing)

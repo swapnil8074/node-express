@@ -11,20 +11,20 @@ var handlebars = require("express3-handlebars").create({
 app.engine("handlebars", handlebars.engine);
 app.set("view engine", "handlebars");
 
+// calling created liberaries
+var fortune = require('./library/fortune.js');
+
+app.get('/headers', function(req,res){
+res.set('Content-Type','text/plain');
+
+res.send(req.path);
+});
+
 app.get("/", function(req, res) {
   res.render("home");
 });
 app.get("/about", function(req, res) {
-  var fortunes = [
-    "Conquer your fears or they will conquer you.",
-    "Rivers need springs.",
-    "Do not fear what you don't know.",
-    "You will have a pleasant surprise.",
-    "Whenever possible, keep it simple."
-  ];
-
-  var randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-  res.render("about", { randomFortune: randomFortune });
+  res.render("about", { randomFortune: fortune.getFortune() });
 });
 
 // custom 404 page
@@ -41,6 +41,8 @@ app.use(function(err, req, res, next) {
   res.status(500);
   res.send("500 - Server Error");
 });
+
+
 
 app.listen(app.get("port"), function() {
   console.log(
